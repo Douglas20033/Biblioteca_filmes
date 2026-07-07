@@ -3,49 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DGFLIX — Início</title>
+    <title>Filmes — DGFLIX</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="estilos/style.css">
 </head>
 <body>
 
-    <!-- ===== CABEÇALHO ===== -->
     <header>
         <h1><a href="index.html">DGFLIX</a></h1>
-
-        <!-- agrupa menu + busca pra terem a mesma largura -->
-        <div class="header-centro">
-            <nav>
-                <ul>
-                    <li><a href="filmes.html">Filmes</a></li>
-                    <li><a href="series.html">Séries</a></li>
-                    <li><a href="lancamentos.html">Lançamentos</a></li>
-                </ul>
-            </nav>
-
-            <div class="busca">
-                <input type="text" id="campo-busca" placeholder="Pesquisar filme...">
-            </div>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="filmes.html">Filmes</a></li>
+                <li><a href="series.html">Séries</a></li>
+                <li><a href="lancamentos.html">Lançamentos</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- ===== LAYOUT DE 3 COLUNAS ===== -->
     <div class="layout-filmes">
 
-        <!-- SIDEBAR ESQUERDA: preenchida pelo JS -->
         <aside class="sidebar">
             <h3 class="titulo-sidebar">Mais Populares</h3>
             <div id="sidebar-populares"></div>
         </aside>
 
-        <!-- CONTEÚDO PRINCIPAL: grade preenchida pelo JS -->
         <main class="conteudo-principal">
-            <h2>Catálogo</h2>
-            <section class="catalogo-secundario" id="grade-catalogo"></section>
+            <h2>Filmes</h2>
+            <section class="catalogo-secundario">
+                <article>
+                    <img src="https://picsum.photos/400/500?random=1" alt="Filme 1">
+                    <h3>Filme 1</h3>
+                </article>
+                <article>
+                    <img src="https://picsum.photos/400/500?random=2" alt="Filme 2">
+                    <h3>Filme 2</h3>
+                </article>
+                <article>
+                    <img src="https://picsum.photos/400/500?random=3" alt="Filme 3">
+                    <h3>Filme 3</h3>
+                </article>
+                <article>
+                    <img src="https://picsum.photos/400/500?random=4" alt="Filme 4">
+                    <h3>Filme 4</h3>
+                </article>
+            </section>
         </main>
 
-        <!-- SIDEBAR DIREITA: recomendados -->
         <aside class="sidebar">
             <h3 class="titulo-sidebar">Recomendados</h3>
             <div id="sidebar-recomendados"></div>
@@ -53,13 +57,6 @@
 
     </div>
 
-    <!-- ===== FAIXA DE DESTAQUES (preenchida pelo JS) ===== -->
-    <section class="destaques-faixa">
-        <h2>Destaques</h2>
-        <div class="carrossel" id="carrossel-destaques"></div>
-    </section>
-
-    <!-- ===== RODAPÉ ===== -->
     <footer>
         <nav>
             <ul>
