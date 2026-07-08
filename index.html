@@ -6,15 +6,18 @@
     <title>DGFLIX — Início</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="estilos/style.css">
 </head>
 <body>
 
     <!-- ===== CABEÇALHO ===== -->
     <header>
-        <h1><a href="index.html">DGFLIX</a></h1>
-
-        <!-- agrupa menu + busca pra terem a mesma largura -->
+        <h1>
+            <a href="index.html" class="btn-home"><i class="fa-solid fa-house"></i></a>
+            <span class="separador">|</span>
+            DGFLIX
+        </h1>
         <div class="header-centro">
             <nav>
                 <ul>
@@ -23,9 +26,8 @@
                     <li><a href="lancamentos.html">Lançamentos</a></li>
                 </ul>
             </nav>
-
             <div class="busca">
-                <input type="text" id="campo-busca" placeholder="Pesquisar filme...">
+                <input type="text" id="campo-busca" placeholder="Pesquisar...">
             </div>
         </div>
     </header>
@@ -33,19 +35,16 @@
     <!-- ===== LAYOUT DE 3 COLUNAS ===== -->
     <div class="layout-filmes">
 
-        <!-- SIDEBAR ESQUERDA: preenchida pelo JS -->
         <aside class="sidebar">
             <h3 class="titulo-sidebar">Mais Populares</h3>
             <div id="sidebar-populares"></div>
         </aside>
 
-        <!-- CONTEÚDO PRINCIPAL: grade preenchida pelo JS -->
         <main class="conteudo-principal">
             <h2>Catálogo</h2>
             <section class="catalogo-secundario" id="grade-catalogo"></section>
         </main>
 
-        <!-- SIDEBAR DIREITA: recomendados -->
         <aside class="sidebar">
             <h3 class="titulo-sidebar">Recomendados</h3>
             <div id="sidebar-recomendados"></div>
@@ -53,10 +52,14 @@
 
     </div>
 
-    <!-- ===== FAIXA DE DESTAQUES (preenchida pelo JS) ===== -->
+    <!-- ===== FAIXA DE DESTAQUES (com setas) ===== -->
     <section class="destaques-faixa">
         <h2>Destaques</h2>
-        <div class="carrossel" id="carrossel-destaques"></div>
+        <div class="carrossel-wrapper">
+            <button class="seta seta-esquerda" id="seta-esq">‹</button>
+            <div class="carrossel" id="carrossel-destaques"></div>
+            <button class="seta seta-direita" id="seta-dir">›</button>
+        </div>
     </section>
 
     <!-- ===== RODAPÉ ===== -->

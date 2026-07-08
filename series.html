@@ -7,18 +7,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="estilos/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body>
+<body data-pagina="series">
 
     <header>
-        <h1><a href="index.html">DGFLIX</a></h1>
-        <nav>
-            <ul>
-                <li><a href="filmes.html">Filmes</a></li>
-                <li><a href="series.html">Séries</a></li>
-                <li><a href="lancamentos.html">Lançamentos</a></li>
-            </ul>
-        </nav>
+        <h1>
+            <a href="index.html" class="btn-home"><i class="fa-solid fa-house"></i></a>
+            <span class="separador">|</span>
+             DGFLIX
+</h1>
+        <div class="header-centro">
+            <nav>
+                <ul>
+                    
+                    <li><a href="filmes.html">Filmes</a></li>
+                    <li><a href="series.html">Séries</a></li>
+                    <li><a href="lancamentos.html">Lançamentos</a></li>
+                </ul>
+            </nav>
+            <div class="busca">
+                <input type="text" id="campo-busca" placeholder="Pesquisar...">
+            </div>
+        </div>
     </header>
 
     <div class="layout-filmes">
@@ -30,27 +41,7 @@
 
         <main class="conteudo-principal">
             <h2>Séries</h2>
-            <section class="catalogo-secundario">
-                <article>
-                    <img src="https://picsum.photos/400/500?random=11" alt="Série 1">
-                    <h3>Série 1</h3>
-                </article>
-                <article>
-                    <img src="https://picsum.photos/400/500?random=12" alt="Série 2">
-                    <h3>Série 2</h3>
-                </article>
-            </section>
-
-            <section class="catalogo-secundario">
-                <article>
-                    <img src="https://picsum.photos/400/500?random=11" alt="Série 1">
-                    <h3>Série 3</h3>
-                </article>
-                <article>
-                    <img src="https://picsum.photos/400/500?random=12" alt="Série 2">
-                    <h3>Série 4</h3>
-                </article>
-            </section>
+            <section class="catalogo-secundario" id="grade-catalogo"></section>
         </main>
 
         <aside class="sidebar">
