@@ -466,6 +466,10 @@ footer a:hover {
 }
 
 @media (max-width: 900px) {
+    :root {
+        --sec-gap: 14px;
+    }
+
     .layout-filmes {
         grid-template-columns: 1fr;
     }
@@ -475,7 +479,7 @@ footer a:hover {
     }
 
     .layout-filmes .catalogo-secundario {
-        grid-template-columns: var(--sec-colunas);
+        grid-template-columns: repeat(3, 1fr);
     }
 
     nav ul {
@@ -496,13 +500,15 @@ footer a:hover {
 @media (max-width: 480px) {
     :root {
         --carrossel-card: 180px;
-    }
-
-    .catalogo-secundario {
-        grid-template-columns: 1fr;
+        --sec-gap: 8px;
     }
 
     .item-popular img {
         height: 220px;
+    }
+
+    h3 {
+        font-size: 0.8em;
+        padding: 6px 4px;
     }
 }
