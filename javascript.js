@@ -259,6 +259,12 @@ function ativarCarrossel() {
     if (setaEsq) setaEsq.addEventListener("click", () => rolar(-1));
 }
 
+/* corta a lista pro múltiplo de 3 mais próximo, pra nunca sobrar uma fileira pela metade */
+function ajustarParaLinhasCompletas(lista, colunas = 3) {
+    if (lista.length < colunas) return lista;
+    return lista.slice(0, Math.floor(lista.length / colunas) * colunas);
+}
+
 /* ===================== BUSCA ===================== */
 let listaAtual = [];
 
@@ -285,7 +291,7 @@ async function iniciar() {
             carregarSidebars()
         ]);
 
-        listaAtual = principal;
+        listaAtual = ajustarParaLinhasCompletas(principal);
         montarCatalogo(listaAtual);
         montarSidebar(sidebars.populares.slice(0, 5), "sidebar-populares");
         montarSidebar(sidebars.recomendados.slice(0, 5), "sidebar-recomendados");
