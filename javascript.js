@@ -23,8 +23,11 @@ async function buscarTMDB(endpoint, params = {}) {
 function mapItem(item) {
     const titulo  = item.title || item.name || 'Sem título';
     const dataLanc = item.release_date || item.first_air_date || '';
+    // media_type vem pronto no /trending; nos outros endpoints inferimos pela presença de "title" (filme) ou "name" (série)
+    const tipo = item.media_type || (item.title ? 'movie' : 'tv');
     return {
         id:     item.id,
+        tipo,
         titulo,
         img:    item.poster_path ? IMG_URL + item.poster_path       : POSTER_PLACEHOLDER,
         imgPeq: item.poster_path ? IMG_URL_SMALL + item.poster_path : POSTER_PLACEHOLDER,
@@ -44,29 +47,31 @@ function montarCatalogo(lista) {
     }
 
     container.innerHTML = lista.map(f => `
-        <article>
+        <article data-id="${f.id}" data-tipo="${f.tipo}">
             <img src="${f.img}" alt="${f.titulo}" loading="lazy">
             <h3>${f.titulo}</h3>
         </article>
     `).join("");
+    ativarCliqueDetalhes(container);
 }
 
 function montarCarrossel(lista, id) {
     const container = document.getElementById(id);
     if (!container) return;
     container.innerHTML = lista.map(f => `
-        <article>
+        <article data-id="${f.id}" data-tipo="${f.tipo}">
             <img src="${f.img}" alt="${f.titulo}" loading="lazy">
             <h3>${f.titulo}</h3>
         </article>
     `).join("");
+    ativarCliqueDetalhes(container);
 }
 
 function montarSidebar(lista, id) {
     const container = document.getElementById(id);
     if (!container) return;
     container.innerHTML = lista.map(f => `
-        <div class="item-popular">
+        <div class="item-popular" data-id="${f.id}" data-tipo="${f.tipo}">
             <img src="${f.imgPeq}" alt="${f.titulo}" loading="lazy">
             <div class="item-info">
                 <h4>${f.titulo}</h4>
@@ -77,6 +82,87 @@ function montarSidebar(lista, id) {
             </div>
         </div>
     `).join("");
+    ativarCliqueDetalhes(container);
+}
+
+/* ===================== MODAL DE DETALHES ===================== */
+function ativarCliqueDetalhes(container) {
+    container.querySelectorAll('[data-id]').forEach(el => {
+        el.addEventListener('click', () => abrirModal(el.dataset.id, el.dataset.tipo));
+    });
+}
+
+function criarModal() {
+    if (document.getElementById('modal-overlay')) return;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'modal-overlay';
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+        <div class="modal">
+            <button class="modal-fechar" id="modal-fechar" aria-label="Fechar">&times;</button>
+            <div class="modal-corpo">
+                <img class="modal-poster" id="modal-poster" src="" alt="">
+                <div class="modal-info">
+                    <h2 id="modal-titulo"></h2>
+                    <div class="modal-meta" id="modal-meta"></div>
+                    <div class="modal-generos" id="modal-generos"></div>
+                    <p class="modal-sinopse" id="modal-sinopse"></p>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    document.getElementById('modal-fechar').addEventListener('click', fecharModal);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) fecharModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fecharModal(); });
+}
+
+function fecharModal() {
+    const overlay = document.getElementById('modal-overlay');
+    if (overlay) overlay.classList.remove('aberto');
+}
+
+async function abrirModal(id, tipo) {
+    criarModal();
+    const overlay = document.getElementById('modal-overlay');
+    overlay.classList.add('aberto');
+
+    document.getElementById('modal-titulo').textContent = 'Carregando...';
+    document.getElementById('modal-poster').src = POSTER_PLACEHOLDER;
+    document.getElementById('modal-meta').innerHTML = '';
+    document.getElementById('modal-generos').innerHTML = '';
+    document.getElementById('modal-sinopse').textContent = '';
+
+    try {
+        const endpoint = tipo === 'tv' ? `/tv/${id}` : `/movie/${id}`;
+        const d = await buscarTMDB(endpoint);
+
+        const titulo   = d.title || d.name || 'Sem título';
+        const dataLanc = d.release_date || d.first_air_date || '';
+        const ano      = dataLanc ? dataLanc.slice(0, 4) : '—';
+        const duracao  = tipo === 'tv'
+            ? (d.number_of_seasons ? `${d.number_of_seasons} temporada${d.number_of_seasons > 1 ? 's' : ''}` : '—')
+            : (d.runtime ? `${d.runtime} min` : '—');
+
+        document.getElementById('modal-poster').src = d.poster_path ? IMG_URL + d.poster_path : POSTER_PLACEHOLDER;
+        document.getElementById('modal-poster').alt = titulo;
+        document.getElementById('modal-titulo').textContent = titulo;
+        document.getElementById('modal-meta').innerHTML = `
+            <span class="nota">⭐ ${d.vote_average ? d.vote_average.toFixed(1) : '—'}</span>
+            <span>${ano}</span>
+            <span>${duracao}</span>
+        `;
+        document.getElementById('modal-generos').innerHTML = (d.genres || [])
+            .map(g => `<span class="genero-tag">${g.name}</span>`).join('');
+        document.getElementById('modal-sinopse').textContent = d.overview || 'Sinopse não disponível.';
+
+    } catch (err) {
+        console.error(err);
+        document.getElementById('modal-titulo').textContent = 'Erro ao carregar detalhes.';
+        document.getElementById('modal-sinopse').textContent = err.message;
+    }
 }
 
 /* qual endpoint usar, conforme a página */

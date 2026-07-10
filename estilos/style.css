@@ -20,7 +20,7 @@
     --sec-borda: 8px;
     --sec-largura-max: 1100px;
 
-    --largura-max-layout: 1500px;
+    --largura-max-layout: 1700px;
     --sidebar-largura: 320px;
 
     --carrossel-card: 300px;
@@ -132,7 +132,7 @@ h3 {
 .layout-filmes {
     display: grid;
     grid-template-columns: var(--sidebar-largura) 1fr var(--sidebar-largura);
-    gap: 30px;
+    gap: 40px;
     max-width: var(--largura-max-layout);
     margin: 0 auto;
     padding: 20px;
@@ -140,12 +140,14 @@ h3 {
 
 .sidebar {
     background-color: var(--preto);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     padding: 20px;
     position: sticky;
     top: 20px;
     align-self: start;
     height: fit-content;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .titulo-sidebar {
@@ -163,6 +165,7 @@ h3 {
     flex-direction: column;
     gap: 8px;
     margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .item-popular img {
@@ -214,6 +217,7 @@ h3 {
     max-width: none;
     margin: 20px 0 0;
     padding: 0;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 .catalogo-secundario img {
@@ -227,6 +231,7 @@ h3 {
 .catalogo-secundario article {
     transition: 0.3s;
     position: relative;
+    cursor: pointer;
 }
 
 .catalogo-secundario article:hover {
@@ -261,6 +266,7 @@ h3 {
 .carrossel article {
     flex: 0 0 var(--carrossel-card);
     transition: 0.3s;
+    cursor: pointer;
 }
 
 .carrossel article:hover {
@@ -310,6 +316,114 @@ h3 {
     animation: pulse 0.4s ease;
 }
 
+/* ===================== MODAL DE DETALHES ===================== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-overlay.aberto {
+    display: flex;
+}
+
+.modal {
+    background: var(--preto);
+    border-radius: 10px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 30px;
+}
+
+.modal-fechar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--texto-claro);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.5em;
+    line-height: 1;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modal-fechar:hover {
+    background: var(--netflix-vermelho);
+}
+
+.modal-corpo {
+    display: flex;
+    gap: 30px;
+}
+
+.modal-poster {
+    width: 260px;
+    flex-shrink: 0;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.modal-info h2 {
+    color: var(--texto-claro);
+    font-size: 1.6em;
+    margin-bottom: 12px;
+}
+
+.modal-meta {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    color: var(--cinza-claro);
+    margin-bottom: 14px;
+    font-size: 0.95em;
+}
+
+.modal-generos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.genero-tag {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--texto-claro);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+}
+
+.modal-sinopse {
+    color: var(--texto-claro);
+    line-height: 1.6;
+    font-size: 0.95em;
+}
+
+@media (max-width: 600px) {
+    .modal-corpo {
+        flex-direction: column;
+    }
+
+    .modal-poster {
+        width: 100%;
+        max-width: 220px;
+        margin: 0 auto;
+    }
+}
+
 /* ===================== RODAPÉ ===================== */
 footer {
     background-color: var(--netflix-vermelho);
@@ -341,6 +455,16 @@ footer a:hover {
 }
 
 /* ===================== RESPONSIVIDADE ===================== */
+@media (max-width: 1300px) and (min-width: 901px) {
+    :root {
+        --sidebar-largura: 220px;
+    }
+
+    .layout-filmes .catalogo-secundario {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 900px) {
     .layout-filmes {
         grid-template-columns: 1fr;
@@ -348,6 +472,10 @@ footer a:hover {
 
     .sidebar {
         display: none;
+    }
+
+    .layout-filmes .catalogo-secundario {
+        grid-template-columns: var(--sec-colunas);
     }
 
     nav ul {
